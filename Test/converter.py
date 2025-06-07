@@ -2,6 +2,14 @@ from PIL import Image
 import os
 
 def convert_to_kindle_grayscale(input_path, output_path, dither=True):
+    """
+    Convert an image to grayscale optimized for Kindle e-ink displays.
+    
+    Args:
+        input_path (str): Path to the input image
+        output_path (str): Path to save the converted image
+        dither (bool): Whether to apply dithering for better grayscale rendering
+    """
     try:
         # Ensure output directory exists
         output_dir = os.path.dirname(output_path)
@@ -29,39 +37,45 @@ def convert_to_kindle_grayscale(input_path, output_path, dither=True):
     except Exception as e:
         print(f"Error processing image: {e}")
 
-
-# Batch processing function to convert multiple images in a directory
-def batch_convert_to_kindle_grayscale(input_dir, output_dir, dither=True):
-    if not os.path.exists(output_dir):
-        os.makedirs(output_dir)
-# Create output directory if it doesn't exist
-    if not os.path.exists(input_dir):
-        raise FileNotFoundError(f"Input directory does not exist: {input_dir}")
-
-
- # Supported image formats
-supported_extensions = ['.png', '.jpg', '.jpeg', '.bmp']
-def is_supported_image(filename):
-    return any(filename.lower().endswith(ext) for ext in supported_extensions)
-
-# Loop through all files in the input directory
-    for filename in os.listdir(input_dir):
+def batch_convert(input_folder, output_folder, dither=True):
+    """
+    Convert all images in a folder to Kindle-compatible grayscale.
+    
+    Args:
+        input_folder (str): Folder containing input images
+        output_folder (str): Folder to save converted images
+        dither (bool): Whether to apply dithering
+    """
+    try:
+        # Ensure input folder exists
+        if not os.path.isdir(input_folder):
+            raise FileNotFoundError(f"Input folder does not exist: {input_folder}")
         
-        if filename.lower().endswith(('.png', '.jpg', '.jpeg', '.bmp')):
-            input_path = os.path.join(input_dir, filename)
-            # Check if the file is a supported image format
-            output_file = f"gray_{filename}"
-            output_path = os.path.join(output_folder, filename)
-            convert_to_kindle_grayscale(input_folder, output_folder, dither)
-    else:
-            print(f"Skipping unsupported file: {filename}")
-
-    print(f"Batch converision completed. Processed files saved to  {output_folder}")
+        # Create output folder if it doesn't exist
+        if not os.path.exists(output_folder):
+            os.makedirs(output_folder)
+        
+        # Supported image extensions
+        supported_extensions = ('.png', '.jpg', '.jpeg', '.bmp', '.gif')
+        
+        # Loop through all files in the input folder
+        for filename in os.listdir(input_folder):
+            if filename.lower().endswith(supported_extensions):
+                input_path = os.path.join(input_folder, filename)
+                # Create output filename (e.g., gray_originalname.png)
+                output_filename = f"gray_{filename}"
+                output_path = os.path.join(output_folder, output_filename)
+                convert_to_kindle_grayscale(input_path, output_path, dither)
+            else:
+                print(f"Skipping {filename}: Unsupported file type")
+                
+        print(f"Batch conversion completed. Processed files saved to {output_folder}")
+        
+    except Exception as e:
+        print(f"Error during batch conversion: {e}")
 
 if __name__ == "__main__":
-    input_folder = "C:/Users/orion/Desktop/KindleWp\Kindle_test/"  # Replace with your input image
-    output_folder = "C:/Users/orion/Desktop/KindleWp/Kindle_test1"  # Explicit file extension
-    batch_convert_to_kindle_grayscale(input_folder, output_image, dither=True)
-    #convert_to_kindle_grayscale(input_image, output_image, dither=True)
-
-    print("Batch conversion completed.")
+    # Specify input and output folders (use forward slashes or raw strings for Windows paths)
+    input_folder = "C:/Users/orion/Desktop/KindleWp/Kindle_test"  # Replace with your input folder
+    output_folder = "C:/Users/orion/Desktop/KindleWp/Kindle_test1"  # Replace with your output folder
+    batch_convert(input_folder, output_folder, dither=True)

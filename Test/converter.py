@@ -12,7 +12,7 @@ def convert_to_kindle_grayscale(input_path, output_path, dither=True):
     """
     try:
         # Open the image
-        img = Image.open(C:\Users\orion\Desktop\KindleWp\Kindle_test)
+        img = Image.open(input_path)
         
         # Convert to grayscale (L mode for 8-bit grayscale)
         img_gray = img.convert('L')
@@ -22,7 +22,7 @@ def convert_to_kindle_grayscale(input_path, output_path, dither=True):
             img_gray = img_gray.convert('L', dither=Image.FLOYDSTEINBERG)
         
         # Save the image (PNG is suitable for Kindle)
-        img_gray.save(C:\Users\orion\Desktop\KindleWp\Kindle_test1, 'PNG')
+        img_gray.save(output_path, 'PNG')
         print(f"Image saved successfully to {output_path}")
         
     except Exception as e:
@@ -48,11 +48,11 @@ def batch_convert(input_folder, output_folder, dither=True):
 
 if __name__ == "__main__":
     # Example usage
-    input_image = "input.jpg"  # Replace with your image path
-    output_image = "output_gray.png"  # Output path
+    input_image = "C:/Users/orion/Desktop/KindleWp/Kindle_test"  # Replace with your image path
+    output_image = "C:/Users/orion/Desktop/KindleWp/Kindle_test1"  # Output path
     convert_to_kindle_grayscale(input_image, output_image, dither=True)
     
     # For batch processing
     # input_folder = "input_folder"
     # output_folder = "output_folder"
-    # batch_convert(input_folder, output_folder, dither=True)
+    # batch_convert(input_folder, output_folder, dither=True)cleaar

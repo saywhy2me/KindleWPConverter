@@ -12,7 +12,7 @@ def convert_to_kindle_grayscale(input_path, output_path, dither=True):
     """
     try:
         # Open the image
-        img = Image.open(Users\orion\Desktop\KindleWp\Kindle_test)
+        img = Image.open(C:\Users\orion\Desktop\KindleWp\Kindle_test)
         
         # Convert to grayscale (L mode for 8-bit grayscale)
         img_gray = img.convert('L')
@@ -22,7 +22,7 @@ def convert_to_kindle_grayscale(input_path, output_path, dither=True):
             img_gray = img_gray.convert('L', dither=Image.FLOYDSTEINBERG)
         
         # Save the image (PNG is suitable for Kindle)
-        img_gray.save(Users\orion\Desktop\KindleWp\Kindle_test1, 'PNG')
+        img_gray.save(C:\Users\orion\Desktop\KindleWp\Kindle_test1, 'PNG')
         print(f"Image saved successfully to {output_path}")
         
     except Exception as e:
